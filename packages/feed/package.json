@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "description": "A launch feed for Robinhood Chain: every Pons launch, curve trade and graduation as one stream of events, from the moment of launch, to standard output or a Redis Stream. Needs only an RPC endpoint.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robelmit/hoodtoolkit-feed.git",
+    "directory": "packages/feed"
+  },
+  "homepage": "https://github.com/robelmit/hoodtoolkit-feed/tree/main/packages/feed#readme",
+  "bugs": {
+    "url": "https://github.com/robelmit/hoodtoolkit-feed/issues"
+  },
   "keywords": [
     "robinhood-chain",
     "pons",
