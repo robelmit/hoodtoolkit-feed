@@ -1,0 +1,70 @@
+{
+  "name": "@hoodtoolkit/feed",
+  "version": "0.1.0",
+  "description": "A launch feed for Robinhood Chain: every Pons launch, curve trade and graduation as one stream of events, from the moment of launch, to standard output or a Redis Stream. Needs only an RPC endpoint.",
+  "license": "MIT",
+  "keywords": [
+    "robinhood-chain",
+    "pons",
+    "launchpad",
+    "indexer",
+    "feed",
+    "memecoin"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "hoodtoolkit-feed": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf dist .turbo"
+  },
+  "dependencies": {
+    "@hoodtoolkit/evm": "^0.1.0",
+    "@hoodtoolkit/pons": "^0.1.0"
+  },
+  "peerDependencies": {
+    "ioredis": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "ioredis": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "ioredis": "^6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

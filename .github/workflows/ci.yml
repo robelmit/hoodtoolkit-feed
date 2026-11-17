@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: hoodtoolkit-feed
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/hoodtoolkit-sdk
+          path: hoodtoolkit-sdk
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: hoodtoolkit-feed/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: pnpm install && pnpm build
+        working-directory: hoodtoolkit-sdk
+      - run: pnpm install && pnpm check
+        working-directory: hoodtoolkit-feed
