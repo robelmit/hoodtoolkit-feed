@@ -1,6 +1,6 @@
 import { PassThrough } from 'node:stream';
-import { ZERO_ADDRESS, addressWord, uintWord, type Erc20Facts, type EvmLog, type EvmRpc } from '@hoodtoolkit/evm';
-import { PONS_FACTORY, PONS_TOPICS, type Curve } from '@hoodtoolkit/pons';
+import { ZERO_ADDRESS, addressWord, uintWord, type Erc20Facts, type EvmLog, type EvmRpc } from '@hood-toolkit/evm';
+import { PONS_FACTORY, PONS_TOPICS, type Curve } from '@hood-toolkit/pons';
 import { describe, expect, it } from 'vitest';
 import { FeedEngine, Poller, QuotePrices, STREAM, USDG, jsonlSink, parsePrices, redisSink, type ChainReads, type FeedEvent } from '../src';
 

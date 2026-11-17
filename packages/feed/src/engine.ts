@@ -9,8 +9,8 @@
  * lists the token then, with `createdAt: null`: seen late is said, not hidden.
  */
 
-import type { Erc20Facts, EvmLog } from '@hoodtoolkit/evm';
-import { PONS_FACTORY, PONS_TOPICS, decodeGraduation, decodeLaunch, decodeTrade, isSnipeTaxed, progressPct, spotPrice, type Curve, type CurveReserves, type PonsTrade } from '@hoodtoolkit/pons';
+import type { Erc20Facts, EvmLog } from '@hood-toolkit/evm';
+import { PONS_FACTORY, PONS_TOPICS, decodeGraduation, decodeLaunch, decodeTrade, isSnipeTaxed, progressPct, spotPrice, type Curve, type CurveReserves, type PonsTrade } from '@hood-toolkit/pons';
 import type { QuotePrices } from './prices';
 import type { FeedEvent, FeedToken, Stage, TokenPatch } from './wire';
 

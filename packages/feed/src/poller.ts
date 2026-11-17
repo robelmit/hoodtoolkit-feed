@@ -9,8 +9,8 @@
  * trades themselves are followed from the head.
  */
 
-import { FILTERED_LOG_SPAN, UNFILTERED_LOG_SPAN, blockNumber, getLogs, type EvmLog, type EvmRpc } from '@hoodtoolkit/evm';
-import { PONS_FACTORY, PONS_TOPICS } from '@hoodtoolkit/pons';
+import { FILTERED_LOG_SPAN, UNFILTERED_LOG_SPAN, blockNumber, getLogs, type EvmLog, type EvmRpc } from '@hood-toolkit/evm';
+import { PONS_FACTORY, PONS_TOPICS } from '@hood-toolkit/pons';
 import type { FeedEngine } from './engine';
 import type { FeedEvent } from './wire';
 

@@ -15,8 +15,8 @@
  * Events go to standard output; everything else goes to standard error.
  */
 
-import { ROBINHOOD_CHAIN_ID, ROBINHOOD_PUBLIC_RPC, blockTime, chainId, createEvmRpc, readErc20 } from '@hoodtoolkit/evm';
-import { readCurve, readReserves } from '@hoodtoolkit/pons';
+import { ROBINHOOD_CHAIN_ID, ROBINHOOD_PUBLIC_RPC, blockTime, chainId, createEvmRpc, readErc20 } from '@hood-toolkit/evm';
+import { readCurve, readReserves } from '@hood-toolkit/pons';
 import { FeedEngine } from './engine';
 import { Poller } from './poller';
 import { QuotePrices, parsePrices } from './prices';

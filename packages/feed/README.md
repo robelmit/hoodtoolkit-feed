@@ -1,11 +1,11 @@
-# @hoodtoolkit/feed
+# @hood-toolkit/feed
 
 A launch feed for Robinhood Chain. It follows Pons and publishes one stream of events: a token was launched, it traded, its curve moved, it graduated.
 
 It shows tokens **from the moment of launch**, while they are still on the bonding curve. It needs only an RPC endpoint: no key, no database.
 
 ```
-npx @hoodtoolkit/feed
+npx @hood-toolkit/feed
 ```
 
 That prints events to standard output, one JSON object per line, from the chain's public endpoint.
@@ -76,7 +76,7 @@ A trade, here paid in the dollar coin:
 The feed fetches no prices. It converts with what you give it:
 
 ```
-QUOTE_PRICES_JSON='{"ETH":3000}' npx @hoodtoolkit/feed
+QUOTE_PRICES_JSON='{"ETH":3000}' npx @hood-toolkit/feed
 ```
 
 Keys are symbols or addresses. The chain's dollar coin (USDG) counts as one dollar. Pons tokens are also paired with tokenized stocks and other tokens; without a price for those, their dollar figures are `null` and the base-unit amounts are still exact. A fixed price goes stale: for a long run, restart with fresh prices or supply your own.
@@ -117,7 +117,7 @@ If the feed falls more than 600 blocks behind, it skips ahead and says so on sta
 ## As a library
 
 ```ts
-import { FeedEngine, Poller, QuotePrices, jsonlSink } from '@hoodtoolkit/feed';
+import { FeedEngine, Poller, QuotePrices, jsonlSink } from '@hood-toolkit/feed';
 ```
 
 `FeedEngine` turns logs into events and reads the chain only through the `ChainReads` you give it. `Poller` follows the chain. `jsonlSink` and `redisSink` are the outputs. `src/cli.ts` shows them wired together.
@@ -133,7 +133,7 @@ import { FeedEngine, Poller, QuotePrices, jsonlSink } from '@hoodtoolkit/feed';
 ## Tests
 
 ```
-pnpm --filter @hoodtoolkit/feed test
+pnpm --filter @hood-toolkit/feed test
 ```
 
 16 tests drive the engine and the poller with faked chain reads. The process was also run against the public endpoint: it listed launches paired with ETH, the dollar coin and another token, and published live trades.

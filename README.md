@@ -4,10 +4,10 @@ A launch feed for Robinhood Chain, from the team behind the Hexa trading termina
 
 | Package | What it does |
 |---|---|
-| [`@hoodtoolkit/feed`](packages/feed) | The feed as a library and as the `hoodtoolkit-feed` command: standard output or a Redis Stream, from an RPC endpoint alone |
+| [`@hood-toolkit/feed`](packages/feed) | The feed as a library and as the `hoodtoolkit-feed` command: standard output or a Redis Stream, from an RPC endpoint alone |
 
 ```bash
-QUOTE_PRICES_JSON='{"ETH":3000}' npx @hoodtoolkit/feed
+QUOTE_PRICES_JSON='{"ETH":3000}' npx @hood-toolkit/feed
 ```
 
 The [community bots](https://github.com/robelmit/hoodtoolkit-bots) and the [agent tools](https://github.com/robelmit/hoodtoolkit-agents) read its stream.

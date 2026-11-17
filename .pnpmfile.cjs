@@ -5,8 +5,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const SIBLINGS = {
-  '@hoodtoolkit/evm': 'hoodtoolkit-sdk/packages/evm',
-  '@hoodtoolkit/pons': 'hoodtoolkit-sdk/packages/pons',
+  '@hood-toolkit/evm': 'hoodtoolkit-sdk/packages/evm',
+  '@hood-toolkit/pons': 'hoodtoolkit-sdk/packages/pons',
 };
 
 function readPackage(pkg) {

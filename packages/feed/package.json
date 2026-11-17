@@ -1,5 +1,5 @@
 {
-  "name": "@hoodtoolkit/feed",
+  "name": "@hood-toolkit/feed",
   "version": "0.1.0",
   "description": "A launch feed for Robinhood Chain: every Pons launch, curve trade and graduation as one stream of events, from the moment of launch, to standard output or a Redis Stream. Needs only an RPC endpoint.",
   "license": "MIT",
@@ -46,8 +46,8 @@
     "clean": "rimraf dist .turbo"
   },
   "dependencies": {
-    "@hoodtoolkit/evm": "^0.1.0",
-    "@hoodtoolkit/pons": "^0.1.0"
+    "@hood-toolkit/evm": "^0.1.0",
+    "@hood-toolkit/pons": "^0.1.0"
   },
   "peerDependencies": {
     "ioredis": ">=5"
