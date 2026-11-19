@@ -73,13 +73,17 @@ A trade, here paid in the dollar coin:
 
 ## Prices in dollars
 
-The feed fetches no prices. It converts with what you give it:
+The feed converts with prices you give it, fixed or live. For a long run, use a live source:
 
 ```
-QUOTE_PRICES_JSON='{"ETH":3000}' npx @hood-toolkit/feed
+QUOTE_PRICE_SOURCE=coinbase npx @hood-toolkit/feed          # ETH from Coinbase's public spot price, every minute
+QUOTE_PRICE_SOURCE=https://you.example/prices.json …        # your own URL answering {"ETH": 3000}
+QUOTE_PRICES_JSON='{"ETH":3000}' npx @hood-toolkit/feed     # fixed, for a trial run
 ```
 
-Keys are symbols or addresses. The chain's dollar coin (USDG) counts as one dollar. Pons tokens are also paired with tokenized stocks and other tokens; without a price for those, their dollar figures are `null` and the base-unit amounts are still exact. A fixed price goes stale: for a long run, restart with fresh prices or supply your own.
+Keys are symbols or addresses. The chain's dollar coin (USDG) counts as one dollar. Pons tokens are also paired with tokenized stocks and other tokens; without a price for those, their dollar figures are `null` and the base-unit amounts are still exact.
+
+A live price that cannot be refreshed keeps its last value for ten minutes and is then dropped, so dollar figures turn `null` instead of going wrong. Use one source per asset: when a live price is dropped, a fixed one for the same asset goes with it. Without any price for ETH, trades paid in ETH have no dollar value: the bots post no buy for them and leave them out of trending.
 
 ## Output
 
@@ -96,7 +100,9 @@ Keys are symbols or addresses. The chain's dollar coin (USDG) counts as one doll
 | `SINK` | `jsonl` | `jsonl` or `redis` |
 | `REDIS_URL` | — | Required with `SINK=redis` |
 | `STREAM_MAX_LENGTH` | `30000` | Entries kept in the stream |
-| `QUOTE_PRICES_JSON` | — | Dollar prices of quote assets |
+| `QUOTE_PRICES_JSON` | — | Fixed dollar prices of quote assets |
+| `QUOTE_PRICE_SOURCE` | — | Live prices: `coinbase` (ETH), `coinbase:ETH,BTC`, or an https URL answering `{"ETH": 3000}` |
+| `QUOTE_PRICE_REFRESH_SECONDS` | `60` | Time between live refreshes, from 10 to 3,600 |
 | `POLL_MS` | `2000` | Time between polls |
 | `BACKFILL_BLOCKS` | `100000` | Launches of this many past blocks are listed on start; `0` for none |
 | `BONDING_THRESHOLD` | `70` | Progress at which `new` becomes `bonding` |

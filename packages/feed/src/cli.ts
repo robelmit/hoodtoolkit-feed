@@ -5,7 +5,9 @@
  *   SINK                jsonl | redis                 (default jsonl, to standard output)
  *   REDIS_URL           required with SINK=redis
  *   STREAM_MAX_LENGTH   entries kept in the stream     (default 30000)
- *   QUOTE_PRICES_JSON   e.g. {"ETH":3000}             (dollar prices of quote assets; absent = dollar figures unknown)
+ *   QUOTE_PRICES_JSON   e.g. {"ETH":3000}             (fixed dollar prices of quote assets; absent = dollar figures unknown)
+ *   QUOTE_PRICE_SOURCE  coinbase | coinbase:ETH,BTC | https://…  (live prices, refreshed every minute; dropped when stale)
+ *   QUOTE_PRICE_REFRESH_SECONDS  time between refreshes (default 60)
  *   RPC_PER_SECOND      calls a second to the endpoint (default 20; 0 for no pacing, on a node of your own)
  *   POLL_MS             time between polls             (default 2000)
  *   BACKFILL_BLOCKS     launches listed on start       (default 100000; 0 for none)
@@ -19,7 +21,7 @@ import { ROBINHOOD_CHAIN_ID, ROBINHOOD_PUBLIC_RPC, blockTime, chainId, createEvm
 import { readCurve, readReserves } from '@hood-toolkit/pons';
 import { FeedEngine } from './engine';
 import { Poller } from './poller';
-import { QuotePrices, parsePrices } from './prices';
+import { QuotePrices, keepPricesFresh, parsePriceSource, parsePrices } from './prices';
 import { jsonlSink, redisSink, type Publish, type RedisXadd } from './sinks';
 
 const say = (level: string, message: string, fields: Record<string, unknown> = {}): void => void process.stderr.write(`${JSON.stringify({ at: new Date().toISOString(), level, message, ...fields })}\n`);
@@ -109,7 +111,15 @@ async function main(): Promise<void> {
   const seconds = env('RUN_SECONDS') ? whole('RUN_SECONDS', 0, 1, 86_400) : 0;
   if (seconds > 0) setTimeout(shutdown, seconds * 1000).unref();
 
-  say('info', 'feed starting', { sink, endpoint: new URL(url).host, pricedQuotes: env('QUOTE_PRICES_JSON') ? 'given' : 'none: dollar figures will be null except for the dollar coin' });
+  const priceSource = env('QUOTE_PRICE_SOURCE') ? parsePriceSource(env('QUOTE_PRICE_SOURCE')!) : null;
+  if (priceSource) {
+    const live = keepPricesFresh(prices, priceSource, { everyMs: whole('QUOTE_PRICE_REFRESH_SECONDS', 60, 10, 3_600) * 1000, signal: stop.signal, log: say });
+    // Trades from the first poll on are priced when the source answers at once; if it does not, they stay unknown.
+    await live.first;
+  }
+
+  const priced = priceSource ? `live from ${priceSource.kind === 'coinbase' ? `Coinbase (${priceSource.symbols.join(', ')})` : new URL(priceSource.url).host}` : env('QUOTE_PRICES_JSON') ? 'given' : 'none: dollar figures will be null except for the dollar coin';
+  say('info', 'feed starting', { sink, endpoint: new URL(url).host, pricedQuotes: priced });
   await poller.run(stop.signal);
 }
 
